@@ -67,13 +67,6 @@ export default function RollingBanner() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const handleClick = () => {
-    const keyword = slides[current]?.name;
-    if (keyword) {
-      router.push(`/map?keyword=${encodeURIComponent(keyword)}`);
-    }
-  };
-
   const goPrev = () => {
     setCurrent(prev => (prev - 1 + slides.length) % slides.length);
   };
@@ -92,7 +85,6 @@ export default function RollingBanner() {
         <Image 
           src={slides[current].image} 
           alt={slides[current].name} 
-          onClick={handleClick}
           width={1920}
           height={1080}
           priority
