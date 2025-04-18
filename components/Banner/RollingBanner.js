@@ -63,7 +63,7 @@ export default function RollingBanner() {
     
     const timer = setInterval(() => {
       setCurrent(prev => (prev + 1) % slides.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -102,13 +102,6 @@ export default function RollingBanner() {
             height: '100%'
           }}
         />
-      </div>
-      <div className={styles.overlay}>
-        <h2>{slides[current].name}</h2>
-        <p className={styles.address}>{slides[current].address}</p>
-        {slides[current].description && (
-          <p className={styles.description}>{slides[current].description}</p>
-        )}
       </div>
       <button className={styles.prev} onClick={goPrev}>&#10094;</button>
       <button className={styles.next} onClick={goNext}>&#10095;</button>
