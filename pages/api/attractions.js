@@ -7,14 +7,51 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { longitude, latitude, weatherCondition, radius: requestRadius, limit: requestLimit } = req.query;
+    const { longitude, latitude, weatherCondition, radius: requestRadius, limit: requestLimit, random } = req.query;
+    const db = await getDatabase();
+    const attractions = db.collection('attractions');
+
+    // 랜덤 모드일 경우
+    if (random === 'true') {
+      const pipeline = [
+        {
+          $match: {
+            images: { $exists: true, $ne: [] }
+          }
+        },
+        {
+          $sample: { size: parseInt(requestLimit) || 10 }
+        },
+        {
+          $project: {
+            name: 1,
+            address: 1,
+            images: 1,
+            description: 1,
+            location: 1
+          }
+        }
+      ];
+
+      const results = await attractions.aggregate(pipeline).toArray();
+      return res.status(200).json({
+        count: results.length,
+        attractions: results
+      });
+    }
     
+    // 기존 위치 기반 검색 로직
     if (!longitude || !latitude) {
       return res.status(400).json({ message: '위도와 경도가 필요합니다.' });
     }
     
-    const db = await getDatabase();
-    const attractions = db.collection('attractions');
+    // 2dsphere 인덱스 생성 (인덱스가 없는 경우에만 생성됨)
+    try {
+      await attractions.createIndex({ "location": "2dsphere" });
+      console.log("2dsphere 인덱스 생성 완료");
+    } catch (indexError) {
+      console.error("인덱스 생성 오류:", indexError);
+    }
     
     // 날씨 조건에 따른 관광지 타입 설정
     const attractionType = getRecommendedAttractionType(weatherCondition || 'Clear');
@@ -27,7 +64,7 @@ export default async function handler(req, res) {
     // 결과 제한 - 요청에서 받거나 기본값 사용
     const limit = requestLimit 
       ? parseInt(requestLimit) 
-      : parseInt(process.env.NEXT_PUBLIC_MAX_RESULTS) || 20; // 기본값을 20개로 조정
+      : parseInt(process.env.NEXT_PUBLIC_MAX_RESULTS) || 20;
     
     // 좌표 변환
     const lng = parseFloat(longitude);
@@ -49,9 +86,9 @@ export default async function handler(req, res) {
       {
         $geoNear: {
           near: { type: "Point", coordinates: [lng, lat] },
-          distanceField: "distance", // 거리 필드 추가
-          maxDistance: radius * 1000, // 미터 단위로 변환
-          spherical: true, // 구면 기하학 사용
+          distanceField: "distance",
+          maxDistance: radius * 1000,
+          spherical: true,
           query: typeQuery
         }
       },
@@ -66,7 +103,6 @@ export default async function handler(req, res) {
           tags: 1,
           images: 1,
           distance: 1,
-          // 거리를 km 단위로 변환
           distanceKm: { $divide: ["$distance", 1000] }
         }
       },
@@ -88,7 +124,7 @@ export default async function handler(req, res) {
         const query = {
           location: {
             $geoWithin: {
-              $centerSphere: [[lng, lat], radius / 6371] // 라디안 변환
+              $centerSphere: [[lng, lat], radius / 6371]
             }
           },
           ...typeQuery
@@ -106,7 +142,7 @@ export default async function handler(req, res) {
             Math.cos(lat * Math.PI / 180) * Math.cos(coords[1] * Math.PI / 180) * 
             Math.sin(dLon/2) * Math.sin(dLon/2);
           const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-          const distance = 6371 * c * 1000; // 미터 단위
+          const distance = 6371 * c * 1000;
           
           return {
             ...attraction,
@@ -134,4 +170,4 @@ export default async function handler(req, res) {
     console.error('관광지 검색 오류:', error);
     return res.status(500).json({ message: '서버 오류가 발생했습니다.', error: error.stack });
   }
-} 
+}

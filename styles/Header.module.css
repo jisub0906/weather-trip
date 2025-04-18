@@ -1,57 +1,147 @@
 .header {
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
 }
 
-.headerContent {
+.topBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1.2rem 2rem;
+  flex-wrap: wrap;
 }
 
 .logo {
-  text-decoration: none;
-  color: #333;
-}
-
-.logo h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.nav ul {
+  height: 60px;
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 2rem;
+  align-items: center;
 }
 
-.nav a {
-  text-decoration: none;
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nickname {
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.moreMenuWrapper {
+  position: relative;
+  margin-left: 0;
+}
+
+.moreButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 24px;
+  height: 24px;
+}
+
+.moreButton span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  border-radius: 1px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 2.2rem;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  z-index: 1001;
+  min-width: 120px;
+}
+
+.dropdownItem {
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dropdownItem:hover {
+  background-color: #f2f2f2;
+}
+
+.navBar {
+  border-top: 1px solid #eee;
+  background-color: #f8f9fa;
+}
+
+.navBar ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 2rem;
+  padding: 0.8rem 0;
+  margin: 0;
+}
+
+.navBar a {
   color: #333;
   font-weight: 500;
-  transition: color 0.3s ease;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.nav a:hover {
+.navBar a:hover {
   color: #0070f3;
 }
 
+/* ✅ 모바일 반응형 */
 @media (max-width: 768px) {
-  .headerContent {
-    flex-direction: column;
-    gap: 1rem;
+  .auth {
+    width: 100%;
+    justify-content: space-between;
   }
-  
-  .nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+
+  .nickname {
+    font-size: 14px;
+    max-width: 40vw;
   }
-} 
+
+  .logoutBtn {
+    font-size: 14px;
+  }
+
+  .moreMenuWrapper {
+    margin-left: 0;
+  }
+}

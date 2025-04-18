@@ -1,0 +1,11 @@
+/* styles/TopBanner.module.css */
+.banner {
+  background-color: #ffefc2;
+  color: #333;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+  z-index: 50;
+}

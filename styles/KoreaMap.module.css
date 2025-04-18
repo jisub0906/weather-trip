@@ -1,8 +1,8 @@
 /* KoreaMap.module.css */
 .mapContainer {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: auto;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
@@ -13,12 +13,12 @@
   
   .koreaMap {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
   }
   
   .region {
-    stroke: rgba(255, 255, 255, 0.8);
+    stroke: rgba(0, 0, 0, 0.8);
     stroke-width: 1;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     fill-opacity: 0.9;
@@ -26,7 +26,7 @@
   }
   
   .island {
-    stroke: rgba(255, 255, 255, 0.8);
+    stroke: rgba(0, 0, 0, 0.8);
     stroke-width: 0.5;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
@@ -45,26 +45,35 @@
     filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.25));
     fill-opacity: 1;
   }
-  
-  
-/* 각 지역별 색상 - 더 부드럽고 투명도 있는 파스텔 색상으로 수정 */
-.seoul { fill: rgba(255, 229, 180, 0.85); }        /* 밝은 황토색 - 투명도 적용 */
-.incheon { fill: rgba(176, 224, 230, 0.85); }      /* 파우더 블루 - 투명도 적용 */
-.gyeonggi { fill: rgba(230, 230, 250, 0.85); }     /* 라벤더 - 투명도 적용 */
-.gangwon { fill: rgba(250, 250, 210, 0.85); }      /* 밝은 골든로드 - 투명도 적용 */
-.chungbuk { fill: rgba(152, 251, 152, 0.85); }     /* 연한 녹색 - 투명도 적용 */
-.chungnam { fill: rgba(135, 206, 250, 0.85); }     /* 밝은 하늘색 - 투명도 적용 */
-.daejeon { fill: rgba(221, 160, 221, 0.85); }      /* 자두색 - 투명도 적용 */
-.sejong { fill: rgba(240, 230, 140, 0.85); }       /* 카키 - 투명도 적용 */
-.jeonbuk { fill: rgba(176, 196, 222, 0.85); }      /* 밝은 강철색 - 투명도 적용 */
-.gwangju { fill: rgba(216, 191, 216, 0.85); }      /* 엉겅퀴 - 투명도 적용 */
-.jeonnam { fill: rgba(230, 165, 126, 0.85); }      /* 연한 산호색 - 투명도 적용 */
-.gyeongbuk { fill: rgba(165, 242, 243, 0.85); }    /* 민트 - 투명도 적용 */
-.daegu { fill: rgba(240, 255, 240, 0.85); }        /* 허니듀 - 투명도 적용 */
-.gyeongnam { fill: rgba(255, 192, 203, 0.85); }    /* 파스텔 핑크 - 투명도 적용 */
-.ulsan { fill: rgba(211, 211, 211, 0.85); }        /* 연한 회색 - 투명도 적용 */
-.busan { fill: rgba(255, 182, 193, 0.85); }        /* 밝은 핑크 - 투명도 적용 */
-.jeju { fill: rgba(245, 222, 179, 0.85); }         /* 밀 - 투명도 적용 */
+
+/* 지리적 그룹 + 행정구역 유형별 색상 (채도 증가) */
+/* 수도권 */
+.seoul { fill: rgba(95, 180, 225, 1); }         /* 특별시 - 선명한 하늘색 */
+.incheon { fill: rgba(140, 200, 235, 1); }      /* 광역시 - 중간 하늘색에 채도 증가 */
+.gyeonggi { fill: rgba(190, 230, 245, 1); }     /* 도 - 연한 하늘색에 채도 증가 */
+
+/* 강원권 */
+.gangwon { fill: rgba(135, 215, 190, 1); }      /* 도 - 선명한 민트색 */
+
+/* 충청권 */
+.sejong { fill: rgba(255, 200, 70, 1); }        /* 특별자치시 - 진한 골드 */
+.daejeon { fill: rgba(255, 220, 110, 1); }      /* 광역시 - 선명한 노랑 */
+.chungbuk, .chungnam { fill: rgba(255, 235, 160, 1); } /* 도 - 밝은 노랑 */
+
+/* 전라권 */
+.gwangju { fill: rgba(255, 150, 100, 1); }      /* 광역시 - 선명한 주황 */
+.jeonbuk, .jeonnam { fill: rgba(255, 190, 150, 1); } /* 도 - 연한 주황 */
+
+/* 경북권 */
+.daegu { fill: rgba(255, 130, 140, 1); }        /* 광역시 - 선명한 분홍 */
+.gyeongbuk { fill: rgba(255, 180, 190, 1); }    /* 도 - 연한 분홍 */
+
+/* 경남권 */
+.busan, .ulsan { fill: rgba(170, 145, 220, 1); } /* 광역시 - 선명한 보라 */
+.gyeongnam { fill: rgba(200, 180, 240, 1); }    /* 도 - 연한 보라 */
+
+/* 제주 */
+.jeju { fill: rgba(235, 144, 217); }         /* 특별자치시 - 선명한 자주색/마젠타 */
   
   @keyframes pulse {
     0% { r: 1; opacity: 0.8; }
@@ -106,3 +115,71 @@
       padding: 0;
     }
   }
+
+/* 지도 컨테이너 */
+.mapSection {
+  width: 100%;
+  max-width: 1024px;
+  height: 1100px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 40px;
+}
+
+.mapTitle {
+  position: relative;
+  color: black;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 600px) {
+  .regionLabel {
+    font-size: 0;
+  }
+  
+  .islandLabel {
+    font-size: 6px;
+  }
+  
+  .countryLabel {
+    font-size: 10px;
+  }
+  
+  .mapContainer {
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .region:hover, .island:hover {
+    transform: none;
+  }
+
+  .mapSection {
+    height: 550px;
+    padding: 20px;
+  }
+
+  .mapTitle {
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .regionLabel {
+    font-size: 8px;
+  }
+  
+  .mapContainer {
+    padding: 0;
+  }
+}

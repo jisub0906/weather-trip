@@ -135,7 +135,9 @@ export default function KoreaMap({ onRegionSelect, selectedRegion }) {
           className={`${styles.region} ${selectedRegion === mapping.code ? styles.selected : ''} ${styles[mapping.code]}`}
           onClick={() => onRegionSelect(mapping.code)}
           data-name={mapping.nameKo}
-        />
+        >
+          <title>{mapping.nameKo}</title>
+        </path>
       );
     });
   };
@@ -168,29 +170,29 @@ export default function KoreaMap({ onRegionSelect, selectedRegion }) {
   };
   
   return (
-    <div className={styles.mapContainer}>
-      <svg 
-        viewBox="0 0 800 800" 
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles.koreaMap}
-      >
-        {/* 배경색 제거 */}
-        
-        {/* GeoJSON에서 생성된 지역 경로 */}
-        {Object.keys(pathData).length > 0 && renderRegions()}
-        
-      {/* 독도 명시적으로 추가 (울릉도 오른쪽에 작은 섬 형태로) */}
-      <circle 
-        cx="790" 
-        cy="310" 
-        r="1.5" 
-        fill="#6495ED" 
-        stroke="#fff" 
-        strokeWidth="0.5" 
-        className={styles.dokdo} 
-      />
-        
-      </svg>
+    <div className={styles.mapSection}>
+      <h1 className={styles.mapTitle}>대한민국 관광지 둘러보기</h1>
+      <div className={styles.mapWrapper}>
+        <svg 
+          viewBox="0 0 800 800" 
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.mapSvg}
+        >
+          {/* GeoJSON에서 생성된 지역 경로 */}
+          {Object.keys(pathData).length > 0 && renderRegions()}
+          
+          {/* 독도 명시적으로 추가 */}
+          <circle
+            cx="790"
+            cy="290"
+            r="1.6"
+            fill="rgba(255, 180, 190, 1)"  /* 경상북도와 동일한 색상 */
+            stroke="#000000"
+            strokeWidth="0.5"
+            className={styles.dokdo}
+          />
+        </svg>
+      </div>
     </div>
   );
 }

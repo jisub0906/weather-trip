@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaHeart, FaRegHeart, FaMapMarkerAlt, FaStar, FaRegStar, FaArrowLeft } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 import styles from '../../styles/AttractionDetail.module.css';
 import axios from 'axios';
@@ -61,41 +61,18 @@ export default function AttractionDetail({ attraction, onClose }) {
     }
   };
 
-  const handleRatingChange = (value) => {
-    setRating(value);
-  };
-
-  const handleReviewSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!review.trim() || rating === 0) return;
+    if (!review.trim()) return;
 
-    setSubmitting(true);
     try {
-      // API 호출
       const response = await axios.post(`/api/attractions/${attraction._id}/review`, {
-        rating,
         comment: review,
       });
-
-      if (response.data.success) {
-        // 서버에서 받은 리뷰 데이터 추가
-        const newReview = {
-          id: response.data._id,
-          rating: response.data.rating,
-          comment: response.data.comment,
-          userName: response.data.userName,
-          date: response.data.date
-        };
-
-        setReviews([...reviews, newReview]);
-        setReview('');
-        setRating(0);
-      }
+      setReviews([response.data, ...reviews]);
+      setReview('');
     } catch (error) {
-      console.error('리뷰 제출 오류:', error);
-      alert('리뷰 저장 중 오류가 발생했습니다. 다시 시도해주세요.');
-    } finally {
-      setSubmitting(false);
+      console.error('리뷰 작성 실패:', error);
     }
   };
 
@@ -145,34 +122,19 @@ export default function AttractionDetail({ attraction, onClose }) {
         <div className={styles.divider}></div>
         
         <h3 className={styles.sectionTitle}>리뷰 작성</h3>
-        <form onSubmit={handleReviewSubmit} className={styles.reviewForm}>
-          <div className={styles.ratingContainer}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => handleRatingChange(star)}
-                className={styles.starButton}
-              >
-                {star <= rating ? <FaStar color="#f39c12" /> : <FaRegStar />}
-              </button>
-            ))}
-          </div>
-          
+        <form onSubmit={handleSubmit} className={styles.reviewForm}>
           <textarea
             value={review}
             onChange={(e) => setReview(e.target.value)}
-            placeholder="이 관광지에 대한 리뷰를 작성해주세요."
+            placeholder="리뷰를 작성하세요..."
             className={styles.reviewInput}
-            required
           />
-          
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={styles.submitButton}
-            disabled={submitting || !review.trim() || rating === 0}
+            disabled={submitting || !review.trim()}
           >
-            {submitting ? '제출 중...' : '리뷰 등록'}
+            작성
           </button>
         </form>
         
@@ -189,13 +151,10 @@ export default function AttractionDetail({ attraction, onClose }) {
               <div key={review.id} className={styles.reviewItem}>
                 <div className={styles.reviewHeader}>
                   <span className={styles.userName}>{review.userName}</span>
-                  <div className={styles.reviewRating}>
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} color={i < review.rating ? '#f39c12' : '#ddd'} />
-                    ))}
-                  </div>
                 </div>
-                <p className={styles.reviewComment}>{review.comment}</p>
+                <div className={styles.reviewContent}>
+                  <p>{review.comment}</p>
+                </div>
                 <span className={styles.reviewDate}>
                   {new Date(review.date).toLocaleDateString()}
                 </span>

@@ -1,0 +1,31 @@
+.searchContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 10px;
+  }
+  
+  .searchInput {
+    flex: 1;
+    width: 100%;              /* ✅ 사이드바 안에서 꽉 차게 */
+    height: 48px;             /* ✅ 높이 키우기 */
+    font-size: 1.1rem;        /* ✅ 글씨 크기도 같이 키워 */
+    padding: 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: white;
+  }
+  
+  .searchButton {
+    height: 40px;                  /* ✅ 너무 커지지 않게! */
+    padding: 0 14px;
+    font-size: 1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  

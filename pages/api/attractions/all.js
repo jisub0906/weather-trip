@@ -9,15 +9,10 @@ export default async function handler(req, res) {
     const db = await getDatabase();
     const attractions = db.collection('attractions');
     
-    // 결과 제한 - 기본값은 100개
-    const limit = req.query.limit ? parseInt(req.query.limit) : 100;
+    console.log('모든 관광지 데이터 요청');
     
-    console.log(`모든 관광지 요청: 최대 ${limit}개`);
-    
-    // 모든 관광지 가져오기 (검색 반경 없이)
-    const results = await attractions.find({})
-      .limit(limit)
-      .toArray();
+    // 모든 관광지 가져오기 (제한 없이)
+    const results = await attractions.find({}).toArray();
     
     console.log(`검색 결과: ${results.length}개 관광지 찾음`);
     

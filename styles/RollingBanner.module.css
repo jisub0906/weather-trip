@@ -1,0 +1,169 @@
+.banner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .banner img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    z-index: 2;
+    max-width: 60%;
+  }
+  
+  .overlay h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .overlay .address {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.8;
+  }
+  
+  .overlay .description {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0 0;
+    opacity: 0.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    font-size: 3rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+  
+  .prev {
+    left: 20px;
+  }
+  
+  .next {
+    right: 20px;
+  }
+  
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* 반응형 스타일 */
+  @media (max-width: 1440px) {
+    .banner {
+      height: 350px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .banner {
+      height: 300px;
+    }
+    
+    .overlay {
+      max-width: 70%;
+    }
+    
+    .overlay h2 {
+      font-size: 1.5rem;
+    }
+    
+    .overlay .address {
+      font-size: 0.9rem;
+    }
+
+    .overlay .description {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .banner {
+      height: 250px;
+    }
+    
+    .overlay {
+      max-width: 80%;
+    }
+    
+    .overlay h2 {
+      font-size: 1.2rem;
+    }
+    
+    .overlay .address {
+      font-size: 0.8rem;
+    }
+
+    .overlay .description {
+      font-size: 0.7rem;
+      -webkit-line-clamp: 1;
+    }
+    
+    .prev,
+    .next {
+      font-size: 2rem;
+      padding: 0.3rem 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner {
+      height: 200px;
+    }
+    
+    .overlay {
+      max-width: 90%;
+      bottom: 20px;
+      left: 20px;
+    }
+    
+    .overlay h2 {
+      font-size: 1rem;
+    }
+    
+    .overlay .address {
+      font-size: 0.7rem;
+    }
+
+    .overlay .description {
+      display: none;
+    }
+  }
+  
